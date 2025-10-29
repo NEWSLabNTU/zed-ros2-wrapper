@@ -329,8 +329,13 @@ def launch_setup(context, *args, **kwargs):
             parameters=node_parameters,
             extra_arguments=[{'use_intra_process_comms': enable_ipc}]
         )
-    
-    full_container_name = '/' + namespace_val + '/' + container_name_val
+
+    # If container_name starts with '/', use it as absolute path
+    # Otherwise construct as /<namespace>/<container_name>
+    if container_name_val.startswith('/'):
+        full_container_name = container_name_val
+    else:
+        full_container_name = '/' + namespace_val + '/' + container_name_val
     info = 'Loading ZED node `' + node_name_val + '` in container `' + full_container_name + '`'
     return_array.append(LogInfo(msg=TextSubstitution(text=info)))
     
