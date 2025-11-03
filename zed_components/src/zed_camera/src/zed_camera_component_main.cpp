@@ -65,7 +65,7 @@ namespace stereolabs
 ZedCamera::ZedCamera(const rclcpp::NodeOptions & options)
 : Node("zed_node", options),
   mThreadStop(false),
-  mQos(QOS_QUEUE_SIZE),
+  mQos(rclcpp::QoS(QOS_QUEUE_SIZE).best_effort()),
   mAiInstanceID(0),
   mDiagUpdater(this),
   mImuTfFreqTimer(get_clock()),
